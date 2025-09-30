@@ -1,0 +1,19 @@
+<svg width="192" height="192" viewBox="0 0 192 192" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- 背景圆形 -->
+  <circle cx="96" cy="96" r="88" fill="url(#gradient)" stroke="#FF6B35" stroke-width="4"/>
+
+  <!-- Fox文字 -->
+  <text x="96" y="90" text-anchor="middle" font-family="Arial, sans-serif" font-size="36" font-weight="bold" fill="white">FOX</text>
+
+  <!-- AI小圆形 -->
+  <circle cx="140" cy="130" r="20" fill="white" stroke="#FF6B35" stroke-width="2"/>
+  <text x="140" y="138" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#FF6B35">AI</text>
+
+  <!-- 渐变定义 -->
+  <defs>
+    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF6B35"/>
+      <stop offset="100%" stop-color="#F7931E"/>
+    </linearGradient>
+  </defs>
+</svg>
