@@ -1,0 +1,19 @@
+{
+  "name": "due-v1",
+  "version": "1.0.0",
+  "description": "A simple command-line due date and task management application",
+  "main": "index.js",
+  "bin": {
+    "due": "./index.js"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["due", "tasks", "todo", "cli", "management"],
+  "author": "Lisa Pullman",
+  "license": "MIT",
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
