@@ -5,11 +5,6 @@
     }
   },
   "regions": ["sin1"],
-  "env": {
-    "KV_URL": "@kv-url",
-    "KV_REST_API_URL": "@kv-rest-api-url",
-    "KV_REST_API_TOKEN": "@kv-rest-api-token"
-  },
   "headers": [
     {
       "source": "/sw.js",
