@@ -1,5 +1,7 @@
 {
-  "regions": ["iad1"],
+  "buildCommand": "npm run build",
+  "outputDirectory": ".next",
+  "framework": "nextjs",
   "headers": [
     {
       "source": "/sw.js",
