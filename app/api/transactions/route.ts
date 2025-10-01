@@ -1,5 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { KVService } from '@/lib/kv-service';
+import { UpstashService } from '@/lib/upstash-service';
+
+// 使用 Upstash 服务，如果不可用则回退到 KV 服务
+const DatabaseService = process.env.UPSTASH_REDIS_REST_URL || process.env.STORAGE_URL ? UpstashService : KVService;
 import { ApiResponse, Transaction } from '@/lib/types';
 
 // GET /api/transactions - 获取交易记录列表
@@ -10,7 +14,7 @@ export async function GET(request: NextRequest) {
     const endDate = searchParams.get('endDate');
     const type = searchParams.get('type') as 'profit' | 'loss' | null;
 
-    let transactions = await KVService.getTransactions();
+    let transactions = await DatabaseService.getTransactions();
 
     // 日期过滤
     if (startDate) {
@@ -90,7 +94,7 @@ export async function POST(request: NextRequest) {
     }
 
     // 检查风险状态
-    const riskStatus = await KVService.getRiskStatus();
+    const riskStatus = await DatabaseService.getRiskStatus();
     if (riskStatus.isInRisk) {
       const response: ApiResponse<null> = {
         success: false,
@@ -104,7 +108,7 @@ export async function POST(request: NextRequest) {
     }
 
     // 创建交易记录
-    const newTransaction = await KVService.addTransaction({
+    const newTransaction = await DatabaseService.addTransaction({
       date,
       amount: type === 'loss' ? -Math.abs(amount) : Math.abs(amount),
       type,

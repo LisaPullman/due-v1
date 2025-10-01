@@ -8,10 +8,14 @@ try {
   // 使用 Upstash Redis REST API
   const { Redis } = require('@upstash/redis');
   
-  if (process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN) {
+  // 支持多种环境变量命名方式
+  const redisUrl = process.env.UPSTASH_REDIS_REST_URL || process.env.STORAGE_URL || process.env.KV_REST_API_URL;
+  const redisToken = process.env.UPSTASH_REDIS_REST_TOKEN || process.env.STORAGE_TOKEN || process.env.KV_REST_API_TOKEN;
+  
+  if (redisUrl && redisToken) {
     redis = new Redis({
-      url: process.env.UPSTASH_REDIS_REST_URL,
-      token: process.env.UPSTASH_REDIS_REST_TOKEN,
+      url: redisUrl,
+      token: redisToken,
     });
     console.log('✅ 使用 Upstash Redis 服务');
   } else {
