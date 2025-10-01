@@ -1,231 +1,254 @@
-# FoxAI记账软件
+# 🦊 FoxAI 记账软件
 
-智能个人记账软件，具备风险提醒功能，支持免费部署到Vercel。
+> 智能个人记账软件，具备风险提醒功能，支持免费部署到 Vercel
 
-## 功能特点
+[![Next.js](https://img.shields.io/badge/Next.js-14-black)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-blue)](https://www.typescriptlang.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind-3-38B2AC)](https://tailwindcss.com/)
+[![Vercel](https://img.shields.io/badge/Deploy-Vercel-black)](https://vercel.com/)
 
-- ✅ **FoxAI品牌展示**: 首页显著位置展示FoxAI LOGO
-- ✅ **交易记录**: 手动录入盈利/亏损数据
-- ✅ **智能风险提醒**: 连续2次亏损后自动24小时暂停交易
-- ✅ **统计分析**: 日/周/月度盈亏统计和图表展示
-- ✅ **响应式设计**: 支持移动端和桌面端
-- ✅ **PWA支持**: 可安装为移动应用
-- ✅ **免费部署**: 完全免费部署到Vercel
+## ✨ 功能特点
 
-## 技术架构
+- 🦊 **FoxAI 品牌展示** - 专业的品牌标识和视觉设计
+- 📝 **智能交易录入** - 直观的表单界面，支持盈利/亏损记录
+- ⚠️ **智能风险管理** - 连续2次亏损自动触发24小时交易暂停
+- 📊 **数据统计分析** - 日/周/月度统计，图表可视化展示
+- 📱 **响应式设计** - 完美适配手机、平板、桌面端
+- 🔄 **PWA 支持** - 可安装为移动应用，支持离线访问
+- 💰 **完全免费** - 基于 Vercel 免费额度，零成本运行
 
-- **前端**: Next.js + TypeScript + Tailwind CSS
-- **后端**: Vercel Serverless Functions
-- **数据库**: Vercel KV (Redis兼容)
-- **图表**: Recharts
-- **图标**: Lucide React
-
-## 快速开始
+## 🚀 快速开始
 
 ### 本地开发
 
-1. **安装依赖**
 ```bash
+# 1. 克隆项目
+git clone <your-repo-url>
+cd foxai-accounting
+
+# 2. 安装依赖
 npm install
-```
 
-2. **本地开发服务器**
-```bash
+# 3. 启动开发服务器
 npm run dev
+
+# 4. 访问应用
+# 打开浏览器访问 http://localhost:3000
 ```
 
-3. **构建生产版本**
-```bash
-npm run build
-```
+### 一键部署到 Vercel
 
-### Vercel部署
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=<your-repo-url>)
 
-1. **安装Vercel CLI**
+或使用命令行部署：
+
 ```bash
+# 1. 安装 Vercel CLI
 npm i -g vercel
-```
 
-2. **登录Vercel**
-```bash
+# 2. 登录 Vercel
 vercel login
+
+# 3. 部署项目
+vercel --prod
 ```
 
-3. **创建Vercel KV数据库**
+## 🏗️ 技术架构
+
+### 前端技术栈
+- **Next.js 14** - React 全栈框架，支持 App Router
+- **TypeScript** - 类型安全的 JavaScript 超集
+- **Tailwind CSS** - 原子化 CSS 框架
+- **Recharts** - React 图表库
+- **Lucide React** - 现代化图标库
+
+### 后端技术栈
+- **Vercel Serverless Functions** - 无服务器 API 路由
+- **Vercel KV** - Redis 兼容的键值数据库
+- **Node.js 18** - JavaScript 运行时环境
+
+### 部署平台
+- **Vercel** - 现代化的前端部署平台
+- **CDN** - 全球内容分发网络
+- **HTTPS** - 自动 SSL 证书
+
+## 📱 界面预览
+
+### 主页 - 交易录入
+- 左侧：智能交易录入表单
+- 右侧：实时统计数据和风险状态
+- 响应式布局，完美适配各种设备
+
+### 统计页面 - 数据分析
+- 多维度统计卡片
+- 交互式图表展示
+- 盈亏分析和胜率计算
+
+### 测试页面 - 系统验证
+- 风险管理系统测试
+- 完整的测试流程
+- 实时测试结果展示
+
+## 🔧 配置说明
+
+### 环境变量
+
+部署到 Vercel 后，需要配置以下环境变量：
+
 ```bash
-kv create foxai-accounting-db
+# Vercel KV 数据库配置
+KV_URL=your_kv_url
+KV_REST_API_URL=your_kv_rest_api_url
+KV_REST_API_TOKEN=your_kv_rest_api_token
 ```
 
-4. **部署到Vercel**
+### 创建 Vercel KV 数据库
+
 ```bash
-vercel
+# 使用 Vercel CLI 创建
+vercel kv create foxai-accounting-db
+
+# 或在 Vercel Dashboard 中创建
+# 访问 https://vercel.com/dashboard
+# Storage -> Create Database -> KV
 ```
 
-5. **配置环境变量**
-在Vercel Dashboard中配置以下环境变量：
-- `KV_URL`: 从KV创建时获得
-- `KV_REST_API_URL`: 从KV创建时获得
-- `KV_REST_API_TOKEN`: 从KV创建时获得
-
-## API接口
+## 📊 API 接口
 
 ### 交易记录
-- `GET /api/transactions` - 获取交易记录列表
-- `POST /api/transactions` - 创建新交易记录
+```typescript
+GET  /api/transactions     # 获取交易记录列表
+POST /api/transactions     # 创建新交易记录
+```
 
 ### 风险管理
-- `GET /api/risk` - 获取风险状态
-- `POST /api/risk?action=reset` - 重置风险状态
+```typescript
+GET  /api/risk             # 获取风险状态
+POST /api/risk?action=reset # 重置风险状态
+```
 
-### 统计
-- `GET /api/statistics?period=daily|weekly|monthly` - 获取统计数据
+### 统计分析
+```typescript
+GET /api/statistics?period=daily|weekly|monthly # 获取统计数据
+```
 
-## 项目结构
+## 📁 项目结构
 
 ```
-foxai-accounting-vercel/
-├── app/                    # Next.js app目录
-│   ├── api/               # API路由
-│   ├── globals.css        # 全局样式
-│   ├── layout.tsx         # 布局组件
-│   ├── page.tsx           # 首页
-│   └── statistics/        # 统计页面
-├── components/            # React组件
-│   ├── FoxAILogo.tsx      # FoxAI品牌组件
+foxai-accounting/
+├── app/                    # Next.js App Router
+│   ├── api/               # API 路由
+│   │   ├── transactions/  # 交易记录 API
+│   │   ├── risk/         # 风险管理 API
+│   │   └── statistics/   # 统计分析 API
+│   ├── statistics/       # 统计页面
+│   ├── test/            # 测试页面
+│   ├── page.tsx         # 主页
+│   ├── layout.tsx       # 布局组件
+│   └── globals.css      # 全局样式
+├── components/            # React 组件
+│   ├── FoxAILogo.tsx     # 品牌 Logo
 │   ├── TransactionForm.tsx # 交易表单
-│   └── RiskAlert.tsx      # 风险警告组件
-├── lib/                   # 工具库
-│   ├── types.ts           # TypeScript类型定义
-│   └── kv-service.ts      # Vercel KV服务
-├── public/                # 静态资源
-│   ├── manifest.json      # PWA配置
-│   └── sw.js             # Service Worker
-└── vercel.json           # Vercel配置
+│   ├── RiskAlert.tsx     # 风险警告
+│   └── Toast.tsx         # 消息提示
+├── lib/                  # 工具库
+│   ├── types.ts         # TypeScript 类型
+│   ├── utils.ts         # 工具函数
+│   └── kv-service.ts    # 数据库服务
+├── public/              # 静态资源
+│   ├── manifest.json    # PWA 配置
+│   ├── sw.js           # Service Worker
+│   └── icon.svg        # 应用图标
+├── package.json         # 项目配置
+├── tailwind.config.js   # Tailwind 配置
+├── tsconfig.json        # TypeScript 配置
+├── next.config.js       # Next.js 配置
+└── vercel.json         # Vercel 部署配置
 ```
 
-## 项目文件说明
+## 🛡️ 风险管理系统
 
-### 📁 根目录文件详解
+### 智能风险控制
+当用户连续录入 2 次亏损记录时，系统会自动：
 
-#### 配置文件
-- **`package.json`** - 项目依赖管理和脚本配置
-  - 定义项目基本信息、依赖包和开发脚本
-  - 包含 Next.js、React、Vercel KV 等核心依赖
-  - 配置开发、构建、部署等命令
+1. **🚨 触发风险警告** - 显示醒目的中文警告提示
+2. **⏸️ 暂停交易功能** - 24 小时内禁止录入新交易
+3. **⏰ 倒计时显示** - 实时显示剩余解除时间
+4. **🔄 自动恢复** - 24 小时后自动解除交易限制
+5. **🔧 手动重置** - 管理员可手动重置风险状态
 
-- **`tsconfig.json`** - TypeScript 编译器配置
-  - 设置 TypeScript 编译选项和路径映射
-  - 配置 JSX 支持和模块解析
-  - 包含 Next.js 插件配置
+### 风险提醒特点
+- 基于连续亏损次数的智能判断
+- 24 小时精确计时系统
+- 用户友好的中文提示界面
+- 数据持久化保存风险状态
 
-- **`next.config.js`** - Next.js 框架配置
-  - 启用 App Router 实验性功能
-  - 配置图片域名白名单
-  - 设置构建和运行时选项
+## 💰 免费额度说明
 
-- **`vercel.json`** - Vercel 平台部署配置
-  - 定义 Serverless Functions 运行时环境
-  - 配置部署区域和环境变量引用
-  - 设置静态资源缓存策略
+### Vercel 免费额度
+- **带宽**: 100GB/月
+- **部署次数**: 100 次/月  
+- **函数执行时间**: 100GB 小时/月
+- **团队成员**: 1 个
 
-- **`tailwind.config.js`** - Tailwind CSS 样式配置
-  - 定义自定义颜色主题（FoxAI 橙色）
-  - 配置内容扫描路径
-  - 设置样式插件
+### Vercel KV 免费额度
+- **命令数**: 30,000 次/月
+- **存储容量**: 256MB
+- **并发连接**: 30 个
+- **数据传输**: 1GB/月
 
-- **`postcss.config.js`** - PostCSS 处理配置
-  - 配置 Tailwind CSS 和 Autoprefixer 插件
-  - 处理 CSS 兼容性和优化
+> 💡 **提示**: 对于个人记账使用，免费额度完全足够！
 
-#### 开发工具
-- **`dev-server.js`** - 本地开发服务器
-  - 模拟 Vercel Serverless Functions 环境
-  - 提供本地 API 测试接口
-  - 支持热重载和跨域请求
+## 🔧 开发指南
 
-- **`test.js`** - 自动化测试脚本
-  - 测试风险管理系统逻辑
-  - 验证交易记录功能
-  - 检查数据持久化和状态管理
+### 本地开发环境
+```bash
+# 启动开发服务器
+npm run dev
 
-#### 文档文件
-- **`README.md`** - 项目说明文档（本文件）
-  - 包含项目介绍、安装部署指南
-  - API 接口文档和项目结构说明
+# 构建生产版本
+npm run build
 
-- **`go.md`** - 原始需求文档
-  - 记录最初的项目需求和功能要求
-  - 包含详细的功能规格说明
+# 启动生产服务器
+npm start
 
-- **`技术规范文档.md`** - 完整技术规范
-  - 系统架构设计和数据模型定义
-  - API 接口规范和前端组件设计
-  - 性能优化和安全性要求
-
-- **`Vercel部署指南.md`** - 部署实施指南
-  - 详细的 Vercel 部署步骤
-  - 免费额度说明和优化建议
-  - 架构迁移和配置说明
-
-- **`DEPLOYMENT.md`** - 部署操作手册
-  - 实际部署流程和命令
-  - 环境配置和故障排除
-  - 生产环境维护指南
-
-- **`PROJECT_SUMMARY.md`** - 项目完成总结
-  - 功能实现清单和验收标准
-  - 技术实现总结和性能指标
-  - 项目里程碑和交付物说明
-
-- **`CLAUDE.md`** - AI 助手指导文档
-  - 为 Claude Code 提供的项目指导
-  - 架构决策和技术栈说明
-  - 开发规范和最佳实践
-
-#### 其他文件
-- **`next-env.d.ts`** - Next.js TypeScript 声明文件
-  - 提供 Next.js 相关类型定义
-  - 支持 IDE 智能提示和类型检查
-
-- **`.gitignore`** - Git 忽略文件配置
-  - 排除 node_modules、构建产物等
-  - 保护敏感信息和临时文件
-
-- **`.claude/`** - Claude AI 助手配置目录
-  - 存储 AI 助手的工作状态和配置
-  - 支持智能代码生成和项目理解
-
-## 许可证
+# 代码检查
+npm run lint
 ```
 
-## 风险管理系统
+### 开发注意事项
+1. **数据库优化** - 合理使用 KV 缓存，减少 API 调用
+2. **响应式设计** - 确保在各种设备上的用户体验
+3. **性能优化** - 利用 Next.js 的优化功能
+4. **类型安全** - 充分利用 TypeScript 的类型检查
 
-当用户连续录入2次亏损记录时，系统会自动：
+## 🤝 贡献指南
 
-1. **触发风险警告**: 显示大幅中文警告提示
-2. **暂停交易**: 24小时内禁止录入新交易
-3. **倒计时显示**: 显示剩余解除时间
-4. **自动恢复**: 24小时后自动解除限制
+欢迎提交 Issue 和 Pull Request！
 
-## 免费额度说明
+1. Fork 本项目
+2. 创建特性分支 (`git checkout -b feature/AmazingFeature`)
+3. 提交更改 (`git commit -m 'Add some AmazingFeature'`)
+4. 推送到分支 (`git push origin feature/AmazingFeature`)
+5. 开启 Pull Request
 
-### Vercel免费额度
-- 带宽: 100GB/月
-- 部署次数: 100次/月
-- 函数执行时间: 100GB小时/月
+## 📄 许可证
 
-### Vercel KV免费额度
-- 命令数: 30,000次/月
-- 存储容量: 100KB
-- 并发连接: 10个
+本项目基于 MIT 许可证开源 - 查看 [LICENSE](LICENSE) 文件了解详情
 
-## 开发注意事项
+## 🙏 致谢
 
-1. **KV使用优化**: 合理使用缓存，减少KV命令数
-2. **响应式设计**: 确保移动端体验
-3. **风险逻辑**: 严格测试24小时计时器
-4. **性能优化**: 使用Next.js优化功能
+- [Next.js](https://nextjs.org/) - 强大的 React 框架
+- [Vercel](https://vercel.com/) - 优秀的部署平台
+- [Tailwind CSS](https://tailwindcss.com/) - 现代化的 CSS 框架
+- [Recharts](https://recharts.org/) - 优雅的图表库
 
-## 许可证
+---
 
-MIT License
+<div align="center">
+
+**🦊 FoxAI 记账软件 - 让记账变得智能而简单**
+
+Made with ❤️ by FoxAI Team
+
+</div>

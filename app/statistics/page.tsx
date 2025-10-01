@@ -78,7 +78,7 @@ export default function StatisticsPage() {
                 onClick={() => setSelectedPeriod(option.value as any)}
                 className={`px-6 py-2 rounded-md font-medium transition-colors ${
                   selectedPeriod === option.value
-                    ? 'bg-foxai-orange text-white'
+                    ? 'bg-orange-500 text-white'
                     : 'text-gray-600 hover:text-gray-800'
                 }`}
               >
@@ -90,7 +90,7 @@ export default function StatisticsPage() {
 
         {loading ? (
           <div className="flex justify-center items-center h-64">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-foxai-orange"></div>
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500"></div>
           </div>
         ) : currentStats ? (
           <div className="space-y-8">
@@ -162,7 +162,7 @@ export default function StatisticsPage() {
                     <XAxis dataKey="name" />
                     <YAxis />
                     <Tooltip formatter={(value) => `¥${value}`} />
-                    <Bar dataKey="value" fill={(entry) => entry.color} />
+                    <Bar dataKey="value" fill="#FF6B35" />
                   </BarChart>
                 </ResponsiveContainer>
               </div>
@@ -224,7 +224,7 @@ export default function StatisticsPage() {
         <div className="text-center mt-12">
           <a
             href="/"
-            className="inline-flex items-center px-6 py-3 bg-foxai-orange text-white rounded-lg font-medium hover:bg-orange-600 transition-colors"
+            className="inline-flex items-center px-6 py-3 bg-orange-500 text-white rounded-lg font-medium hover:bg-orange-600 transition-colors"
           >
             ← 返回首页
           </a>

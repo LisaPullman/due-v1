@@ -186,7 +186,7 @@ export default function TestPage() {
             className={`px-8 py-3 rounded-lg font-medium transition-colors ${
               isTesting
                 ? 'bg-gray-400 text-gray-200 cursor-not-allowed'
-                : 'bg-foxai-orange text-white hover:bg-orange-600'
+                : 'bg-orange-500 text-white hover:bg-orange-600'
             }`}
           >
             {isTesting ? (
@@ -259,4 +259,4 @@ export default function TestPage() {
       </div>
     </div>
   );
-} }\u003c/a\u003e\n        \u003c/div\u003e\n      \u003c/div\u003e\n    \u003c/div\u003e\n  );\n}
+}

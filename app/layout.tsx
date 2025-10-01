@@ -1,7 +1,6 @@
 import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import ToastContainer from '@/components/Toast'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -25,17 +24,14 @@ export default function RootLayout({
       <head>
         <link rel="manifest" href="/manifest.json" />
         <meta name="theme-color" content="#FF6B35" />
-        <link rel="icon" href="/favicon.ico" />
-        <link rel="apple-touch-icon" href="/icon-192x192.png" />
+        <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+        <link rel="apple-touch-icon" href="/icon.svg" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="apple-mobile-web-app-title" content="FoxAI记账" />
       </head>
       <body className={inter.className}>
-        <div className="min-h-screen bg-gradient-to-br from-orange-50 via-yellow-50 to-orange-100">
-          {children}
-        </div>
-        <ToastContainer />
+        {children}
       </body>
     </html>
   )
