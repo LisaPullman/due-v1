@@ -11,8 +11,10 @@
 
 - 🦊 **FoxAI 品牌展示** - 专业的品牌标识和视觉设计
 - 📝 **智能交易录入** - 直观的表单界面，支持盈利/亏损记录
-- ⚠️ **智能风险管理** - 连续2次亏损自动触发24小时交易暂停
+- ⚠️ **智能风险管理** - 连续2次亏损触发风险提醒，停止交易一天
+- 🎭 **视觉风险提醒** - 浮动警告窗口 + 全页面灰色效果
 - 📊 **数据统计分析** - 日/周/月度统计，图表可视化展示
+- 🗑️ **数据重置功能** - 一键归零所有数据，支持系统初始化
 - 📱 **响应式设计** - 完美适配手机、平板、桌面端
 - 🔄 **PWA 支持** - 可安装为移动应用，支持离线访问
 - 💰 **完全免费** - 基于 Vercel 免费额度，零成本运行
@@ -36,22 +38,15 @@ npm run dev
 # 打开浏览器访问 http://localhost:3000
 ```
 
-### 一键部署到 Vercel
+### 🚀 一键部署到 Vercel
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=<your-repo-url>)
+1. **Fork 本项目** 到您的 GitHub 账户
+2. **登录 Vercel** 并连接 GitHub
+3. **导入项目** 选择您 fork 的仓库
+4. **创建 KV 数据库** 在 Vercel Dashboard 中
+5. **自动部署** Vercel 会自动构建和部署
 
-或使用命令行部署：
-
-```bash
-# 1. 安装 Vercel CLI
-npm i -g vercel
-
-# 2. 登录 Vercel
-vercel login
-
-# 3. 部署项目
-vercel --prod
-```
+详细步骤请查看 [DEPLOYMENT_VERCEL.md](./DEPLOYMENT_VERCEL.md)
 
 ## 🏗️ 技术架构
 

@@ -1,6 +1,7 @@
 import './globals.css'
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { Inter } from 'next/font/google'
+import RiskProvider from '@/components/RiskProvider'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -9,8 +10,12 @@ export const metadata: Metadata = {
   description: '智能个人记账软件，具备风险提醒功能',
   keywords: '记账, 理财, FoxAI, 风险管理',
   authors: [{ name: 'FoxAI' }],
-  viewport: 'width=device-width, initial-scale=1',
   manifest: '/manifest.json',
+}
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
   themeColor: '#FF6B35',
 }
 
@@ -31,7 +36,9 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-title" content="FoxAI记账" />
       </head>
       <body className={inter.className}>
-        {children}
+        <RiskProvider>
+          {children}
+        </RiskProvider>
       </body>
     </html>
   )

@@ -3,7 +3,7 @@ import { KVService } from '@/lib/kv-service';
 import { UpstashService } from '@/lib/upstash-service';
 
 // 使用 Upstash 服务，如果不可用则回退到 KV 服务
-const DatabaseService = process.env.UPSTASH_REDIS_REST_URL || process.env.STORAGE_URL ? UpstashService : KVService;
+const DatabaseService = (process.env.UPSTASH_REDIS_REST_URL || process.env.STORAGE_URL || process.env.KV_REST_API_URL) ? UpstashService : KVService;
 import { ApiResponse, Transaction } from '@/lib/types';
 
 // GET /api/transactions - 获取交易记录列表

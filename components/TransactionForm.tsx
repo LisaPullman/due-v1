@@ -1,9 +1,10 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Plus, Calendar, DollarSign, MessageSquare } from 'lucide-react';
+import { Plus, Calendar, DollarSign, MessageSquare, AlertTriangle } from 'lucide-react';
 import type { Transaction } from '@/lib/types';
 import { getCurrentDate, isValidAmount } from '@/lib/utils';
+import { useRisk } from './RiskProvider';
 
 interface TransactionFormProps {
   onSubmit: (data: Omit<Transaction, 'id' | 'createdAt' | 'updatedAt'>) => void;
@@ -16,6 +17,21 @@ export default function TransactionForm({ onSubmit, loading }: TransactionFormPr
   const [type, setType] = useState<'profit' | 'loss'>('profit');
   const [description, setDescription] = useState('');
   const [errors, setErrors] = useState<Record<string, string>>({});
+  
+  // 安全地获取风险状态
+  let riskStatus = null;
+  let isRiskActive = false;
+  let refreshRiskStatus = () => {};
+  
+  try {
+    const riskContext = useRisk();
+    riskStatus = riskContext.riskStatus;
+    isRiskActive = riskContext.isRiskActive;
+    refreshRiskStatus = riskContext.refreshRiskStatus;
+  } catch (error) {
+    // 如果没有RiskProvider，使用默认值
+    console.warn('TransactionForm: RiskProvider not found, using default values');
+  }
 
   useEffect(() => {
     // 自动填充当前日期
@@ -40,6 +56,12 @@ export default function TransactionForm({ onSubmit, loading }: TransactionFormPr
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
+    // 检查风险状态
+    if (isRiskActive) {
+      setErrors({ submit: '系统处于风险状态，暂时无法录入交易' });
+      return;
+    }
+
     if (!validateForm()) {
       return;
     }
@@ -57,6 +79,9 @@ export default function TransactionForm({ onSubmit, loading }: TransactionFormPr
     setAmount('');
     setDescription('');
     setErrors({});
+    
+    // 刷新风险状态
+    refreshRiskStatus();
   };
 
   const handleAmountChange = (value: string) => {
@@ -220,12 +245,36 @@ export default function TransactionForm({ onSubmit, loading }: TransactionFormPr
           </div>
         </div>
 
+        {/* 风险状态提醒 */}
+        {isRiskActive && (
+          <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+            <div className="flex items-center">
+              <AlertTriangle className="w-5 h-5 text-red-500 mr-2" />
+              <div>
+                <h3 className="text-red-800 font-medium">交易已暂停</h3>
+                <p className="text-red-700 text-sm mt-1">
+                  连续亏损触发风险保护，请明天再来录入交易
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* 错误消息 */}
+        {errors.submit && (
+          <div className="bg-red-50 border border-red-200 rounded-lg p-3">
+            <p className="text-red-700 text-sm">{errors.submit}</p>
+          </div>
+        )}
+
         {/* 提交按钮 */}
         <button
           type="submit"
-          disabled={loading}
+          disabled={loading || isRiskActive}
           className={`w-full py-4 px-6 rounded-xl font-semibold text-lg transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] shadow-lg ${
-            type === 'profit'
+            isRiskActive
+              ? 'bg-gray-400 text-gray-600 cursor-not-allowed'
+              : type === 'profit'
               ? 'bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white'
               : 'bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white'
           } disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none`}
@@ -234,6 +283,11 @@ export default function TransactionForm({ onSubmit, loading }: TransactionFormPr
             <span className="flex items-center justify-center">
               <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white mr-3"></div>
               提交中...
+            </span>
+          ) : isRiskActive ? (
+            <span className="flex items-center justify-center">
+              <AlertTriangle className="w-5 h-5 mr-2" />
+              交易已暂停
             </span>
           ) : (
             <span className="flex items-center justify-center">

@@ -3,32 +3,20 @@
 import { useState, useEffect } from 'react';
 import FoxAILogo from '@/components/FoxAILogo';
 import TransactionForm from '@/components/TransactionForm';
+import { useRisk } from '@/components/RiskProvider';
 import { RiskStatus } from '@/lib/types';
 
 export default function Home() {
-  const [riskStatus, setRiskStatus] = useState<RiskStatus | null>(null);
   const [loading, setLoading] = useState(false);
   const [todayStats, setTodayStats] = useState({ profit: 0, loss: 0, net: 0 });
   const [message, setMessage] = useState('');
+  
+  // 使用全局风险状态
+  const { riskStatus, refreshRiskStatus } = useRisk();
 
   useEffect(() => {
-    fetchRiskStatus();
     fetchTodayStatistics();
   }, []);
-
-  const fetchRiskStatus = async () => {
-    try {
-      const response = await fetch('/api/risk');
-      const data = await response.json();
-      if (data.success) {
-        setRiskStatus(data.data);
-      } else {
-        console.log('获取风险状态失败:', data.error?.message);
-      }
-    } catch (error) {
-      console.error('Error fetching risk status:', error);
-    }
-  };
 
   const fetchTodayStatistics = async () => {
     try {
@@ -63,7 +51,7 @@ export default function Home() {
       if (data.success) {
         setMessage('✅ ' + data.message);
         // 重新获取风险状态和统计数据
-        await fetchRiskStatus();
+        await refreshRiskStatus();
         await fetchTodayStatistics();
       } else {
         if (data.error?.code === 'RISK_WARNING') {
@@ -87,7 +75,7 @@ export default function Home() {
       });
       const data = await response.json();
       if (data.success) {
-        await fetchRiskStatus();
+        await refreshRiskStatus();
         setMessage('✅ 风险状态已重置');
       } else {
         setMessage('❌ 重置失败: ' + data.error?.message);
@@ -263,7 +251,7 @@ export default function Home() {
                 <span className="w-2 h-6 bg-orange-500 rounded-full mr-3"></span>
                 快速操作
               </h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 <a
                   href="/statistics"
                   className="group flex items-center justify-center p-4 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-xl hover:from-blue-600 hover:to-blue-700 transition-all duration-200 transform hover:scale-105 shadow-lg"
@@ -294,6 +282,17 @@ export default function Home() {
                     <div className="text-2xl mb-2">🔍</div>
                     <h3 className="font-semibold">简单测试</h3>
                     <p className="text-sm opacity-90">基础功能测试</p>
+                  </div>
+                </a>
+
+                <a
+                  href="/reset"
+                  className="group flex items-center justify-center p-4 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-xl hover:from-red-600 hover:to-red-700 transition-all duration-200 transform hover:scale-105 shadow-lg"
+                >
+                  <div className="text-center">
+                    <div className="text-2xl mb-2">🗑️</div>
+                    <h3 className="font-semibold">数据重置</h3>
+                    <p className="text-sm opacity-90">一键归零所有数据</p>
                   </div>
                 </a>
               </div>
